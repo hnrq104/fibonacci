@@ -21,6 +21,7 @@ func nodeLink(x, y *FibonnaciNode) *FibonnaciNode {
 	if y.key < x.key {
 		x, y = y, x
 	}
+	y.parent = x
 
 	y.left.right = y.right
 	y.right.left = y.left
@@ -42,7 +43,9 @@ func nodeLink(x, y *FibonnaciNode) *FibonnaciNode {
 }
 
 func (h *FibonnaciHeap) cut(x *FibonnaciNode) {
-	if x.parent.child == x {
+	if x.right == x {
+		x.parent.child = nil
+	} else if x.parent.child == x {
 		x.parent.child = x.right
 	}
 	x.parent = nil
@@ -71,7 +74,7 @@ func (h *FibonnaciHeap) lengthAndMaxDegree() (int, int) {
 	var length, maxdegree int
 
 	aux := h.min
-	for {
+	for i := 0; i < 10; i++ {
 		length++
 		maxdegree = max(maxdegree, aux.degree)
 		if aux.right == h.min {

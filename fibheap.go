@@ -1,5 +1,7 @@
 package fibonacci
 
+import "log"
+
 // Start with float64, then we see whatelse
 type FibonnaciHeap struct {
 	size  int
@@ -105,6 +107,7 @@ func (heap *FibonnaciHeap) ExtractMin() *FibonnaciNode {
 		}
 	}
 
+	log.Println("passed first loop")
 	//remove from root list
 	removed.left.right = removed.right
 	removed.right.left = removed.left
@@ -115,6 +118,8 @@ func (heap *FibonnaciHeap) ExtractMin() *FibonnaciNode {
 		heap.min = removed.right
 		heap.consolidate()
 	}
+
+	log.Println("passed consolidate")
 
 	heap.size--
 	heap.roots += removed.degree - 1
